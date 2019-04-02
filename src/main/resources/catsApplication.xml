@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+
+	<bean id="logAop3" class="com.javalec.ex.LogAop3"></bean>
+	
+	<!-- AOP 설정 -->
+	<aop:config>
+		<!-- aspect id는 logger3이고, logAop3을 참조 -->
+		<aop:aspect id="logger3" ref="logAop3">
+			<!-- pointcut(핵심 기능)의 id는 publicM이고, com.javalec.ex 패키지에 있는 모든 클래스에 공통 기능을 부여-->
+			<aop:pointcut id="publicM" expression="within(com.javalec.ex.*)"></aop:pointcut>
+			<!-- loggerAop3()라는 공통 기능을 publicM이라는 pointcut에 적용 -->
+			<aop:around pointcut-ref="publicM" method="loggerAop3"></aop:around>
+		
+		</aop:aspect>
+	</aop:config>
+
+	<bean id="cats" class="com.javalec.ex.Cats">
+		<property name="name" value="나비" />
+		<property name="age" value="2" />
+		<property name="color" value="yellow" />		
+	</bean>
+</beans>
